@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* ---------- BACKGROUNDS ---------- */
+#screen1 { background-image: url("https://sooema.github.io/valentine/bg1.jpg"); }
+#screen1_5 { background-image: url("https://sooema.github.io/valentine/bg15.jpg"); }
+
+/* overlay for readability */
+.screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+.screen > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- HEART ---------- */
+.heart {
+  width: 120px;
+  height: 120px;
+  background: red;
+  transform: rotate(-45deg);
+  position: relative;
+  animation: pulse 1.2s infinite;
+}
+.heart::before,
+.heart::after {
+  content: "";
+  width: 120px;
+  height: 120px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+}
+.heart::before { top: -60px; left: 0; }
+.heart::after { left: 60px; top: 0; }
+
+.heart-text {
+  position: absolute;
+  transform: rotate(45deg);
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  top: 40px;
+  left: 25px;
+}
+
+@keyframes pulse {
+  0% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.15); }
+  100% { transform: rotate(-45deg) scale(1); }
+}
+
+/* ---------- BUTTON ---------- */
+button {
+  padding: 12px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background: #ff4b5c;
+  color: white;
+}
+
+/* ---------- YES / NO ---------- */
+.choices {
+  position: relative;
+  width: 300px;
+  height: 160px;
+}
+
+#yesBtn {
+  position: absolute;
+  left: 20px;
+  top: 70px;
+}
+
+#noBtn {
+  position: absolute;
+  left: 180px;
+  top: 70px;
+  background: #555;
+}
+
+.hint {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* ---------- SURPRISE ---------- */
+#surprise {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  animation: fadeIn 1s forwards;
+}
+
+#surprise img {
+  width: 250px;
+  border-radius: 20px;
+}
+
+#surprise h2 {
+  color: white;
+}
+
+.fade-out {
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ---------- VIDEO ---------- */
+video {
+  width: 80%;
+  max-width: 500px;
+  border-radius: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Screen 1 -->
+<div class="screen active" id="screen1">
+  <div class="heart">
+    <div class="heart-text">Hello</div>
+  </div>
+  <button onclick="go('screen1','screen1_5')">HI</button>
+</div>
+
+<!-- Screen 1.5 -->
+<div class="screen" id="screen1_5">
+  <h1 style="color:white;">are you lovolina lovolol? 👋</h1>
+  <button onclick="go('screen1_5','screen2'); startTimer()">Yes</button>
+</div>
+
+<!-- Screen 2 -->
+<div class="screen" id="screen2">
+  <h1 style="color:white;">Will you be my Valentine? 💘</h1>
+
+  <div class="choices">
+    <button id="yesBtn" onclick="go('screen2','screen3')">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+
+  <div class="hint">i will suggest you to try to select no first 😉</div>
+
+  <!-- Surprise -->
+  <div id="surprise">
+    <img src="https://sooema.github.io/valentine/surprise.jpg" alt="Surprise">
+    <h2> you koskesh, enough. now go and select the right one</h2>
+  </div>
+</div>
+
+<!-- Screen 3 -->
+<div class="screen" id="screen3">
+  <video controls autoplay>
+    <source src="https://sooema.github.io/valentine/video.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const surprise = document.getElementById("surprise");
+
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.style.left = Math.random() * 220 + "px";
+  noBtn.style.top = Math.random() * 100 + "px";
+});
+
+function go(from, to) {
+  document.getElementById(from).classList.remove("active");
+  document.getElementById(to).classList.add("active");
+}
+
+function startTimer() {
+  setTimeout(showSurprise, 5000);
+}
+
+function showSurprise() {
+  surprise.style.display = "flex";
+
+  setTimeout(() => {
+    surprise.classList.add("fade-out");
+    setTimeout(() => {
+      surprise.style.display = "none";
+      surprise.classList.remove("fade-out");
+    }, 1000);
+  }, 5000);
+}
+</script>
+
+</body>
+</html>
