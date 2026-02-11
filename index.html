@@ -208,17 +208,11 @@ video {
 </div>
 
 <!-- Screen 3 -->
-<div class="screen" id="screen3"></div>
-
-
-<script>
-const noBtn = document.getElementById("noBtn");
-const surprise = document.getElementById("surprise");
-
-noBtn.addEventListener("mouseenter", () => {
-  noBtn.style.left = Math.random() * 220 + "px";
-  noBtn.style.top = Math.random() * 100 + "px";
-});
+<div class="screen" id="screen3">
+  <video id="valentineVideo" controls>
+    <source src="https://sooema.github.io/valentine/video.mp4" type="video/mp4">
+  </video>
+</div>
 
 <script>
 const noBtn = document.getElementById("noBtn");
@@ -232,47 +226,13 @@ noBtn.addEventListener("mouseenter", () => {
 function go(from, to) {
   document.getElementById(from).classList.remove("active");
   document.getElementById(to).classList.add("active");
-
+  
   if (to === "screen3") {
-    const screen3 = document.getElementById("screen3");
-
-    // جلوگیری از ساخت دوباره
-    if (!document.getElementById("valentineVideo")) {
-      const video = document.createElement("video");
-      video.id = "valentineVideo";
-      video.src = "https://sooema.github.io/valentine/video.mp4";
-      video.controls = true;
-      video.playsInline = true;   // خیلی مهم برای iOS
-      video.style.width = "80%";
-      video.style.maxWidth = "500px";
-      video.style.borderRadius = "20px";
-
-      screen3.appendChild(video);
-
-      video.play().catch(() => {
-        // اگر موبایل گیر داد، کنترل‌ها هستن
-      });
-    }
+    const video = document.getElementById("valentineVideo");
+    video.currentTime = 0;
+    video.play();
   }
 }
-
-function startTimer() {
-  setTimeout(showSurprise, 5000);
-}
-
-function showSurprise() {
-  surprise.style.display = "flex";
-
-  setTimeout(() => {
-    surprise.classList.add("fade-out");
-    setTimeout(() => {
-      surprise.style.display = "none";
-      surprise.classList.remove("fade-out");
-    }, 1000);
-  }, 5000);
-}
-</script>
-
 
 function startTimer() {
   setTimeout(showSurprise, 5000);
